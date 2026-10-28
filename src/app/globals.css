@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #070809;
+  --color-coal: #0d0e10;
+  --color-panel: #121416;
+  --color-line: rgba(244, 241, 232, 0.09);
+  --color-cream: #f4f1e8;
+  --color-fog: #a7adb5;
+  --color-dim: #6b7280;
+  --color-lime: #d7ff3e;
+  --color-lime-deep: #a8cc1e;
+  --color-ice: #7dd3fc;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --lime: #d7ff3e;
+  --cream: #f4f1e8;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  background: #070809;
+  color: #f4f1e8;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #d7ff3e;
+  color: #070809;
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0d0e10; }
+::-webkit-scrollbar-thumb { background: #2a2e33; border-radius: 8px; border: 2px solid #0d0e10; }
+::-webkit-scrollbar-thumb:hover { background: #d7ff3e; }
+
+.font-display { font-family: var(--font-display); }
+.font-mono2 { font-family: var(--font-mono); }
+
+.text-stroke {
+  -webkit-text-stroke: 1px rgba(244,241,232,0.28);
+  color: transparent;
+}
+.text-stroke-lime {
+  -webkit-text-stroke: 1px rgba(215,255,62,0.7);
+  color: transparent;
+}
+
+/* fine grid backdrop */
+.bg-blueprint {
+  background-image:
+    linear-gradient(rgba(244,241,232,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244,241,232,0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+.bg-blueprint-fine {
+  background-image:
+    linear-gradient(rgba(244,241,232,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244,241,232,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+.glow-lime {
+  box-shadow: 0 0 24px rgba(215,255,62,0.35), 0 0 80px rgba(215,255,62,0.12);
+}
+
+.mask-fade-x {
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+/* marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 28s linear infinite; }
+.animate-marquee-slow { animation: marquee 46s linear infinite; }
+
+/* flow dash */
+@keyframes dashflow {
+  to { stroke-dashoffset: -28; }
+}
+.flow-line {
+  stroke-dasharray: 6 8;
+  animation: dashflow 1.2s linear infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.75); }
+}
+.pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-floaty { animation: floaty 6s ease-in-out infinite; }
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 22s linear infinite; }
+
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+.animate-blink { animation: blink 1.6s ease-in-out infinite; }
+
+/* link underline */
+.u-link {
+  position: relative;
+}
+.u-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -3px;
+  height: 1px; width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.u-link:hover::after, .u-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* focus */
+:focus-visible {
+  outline: 2px solid #d7ff3e;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee, .animate-marquee-slow, .animate-floaty, .animate-spin-slow, .flow-line, .pulse-dot { animation: none !important; }
+}
